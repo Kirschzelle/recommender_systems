@@ -1,5 +1,7 @@
 # Recommender Systems
 
+![image](https://github.com/user-attachments/assets/1c9747cc-9fff-41c0-95ef-3660e5b52afc)
+
 ## Project Description:
 The goal of the concluding project is to experiment with different strategies to generate recommendations of similar items. The movie domain can be used for this experiment. 
 
