@@ -1,3 +1,6 @@
+from data import movies_df, cosine_similarity_matrix
+
+
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
     Dispatches a movie recommendation request to one of several recommendation strategies.
@@ -23,9 +26,9 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 1:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 2:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return recommendation_genre(movie_id, recommendation_amount)
         case 3:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return recommendation_collaborators(movie_id, recommendation_amount)
         case 4:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 5:
@@ -52,3 +55,26 @@ def recommendation_placeholder(movie_id, recommendation_amount):
     
     recommendations = [movie_id for _ in range(recommendation_amount)]
     return recommendations
+
+def recommendation_genre(movie_id, recommendation_amount):
+    if movie_id not in movies_df['movieId'].values:
+        raise Exception(f"Movie ID {movie_id} not found.")
+
+    movie_index = movies_df[movies_df['movieId'] == movie_id].index[0]
+
+    similarity_scores = list(enumerate(cosine_similarity_matrix[movie_index]))
+    similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+
+    recommendations_ids = []
+    count = 0
+    for idx, score in similarity_scores:
+        if idx == movie_index:
+            continue
+        recommendations_ids.append(idx)
+        count += 1
+        if count >= recommendation_amount:
+            break
+    return recommendations_ids
+
+def recommendation_collaborators(movie_id, recommendation_amount):
+    pass
