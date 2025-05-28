@@ -20,10 +20,10 @@ def load_data():
 
     global people_df
     people_df = pd.read_csv("output.csv")
-    people_df["names"] = people_df["names"].apply(lambda x: x if pd.notna(x) else ["NO_DATA_AVAILABLE"])
 
     global movies_with_people_df
     movies_with_people_df = pd.merge(movies_df, people_df, how='left', on='movieId')
+    movies_with_people_df["names"] = movies_with_people_df["names"].apply(lambda x: x if pd.notna(x) else ["NO_DATA_AVAILABLE"])
 
 def precompute():
     load_data()
@@ -82,15 +82,14 @@ def extract_information_from_json_to_csv():
 
 
             """
-            Here other types of information can be extracted. To add columns just add the column name above, 
-            and add the informations to the DataFrame below
+            Here other types of information can be extracted. 
             """
 
-            # only add the rows with more than zero actors to the DataFrame
+            # only add the rows with more than zero actors
             if len(names) != 0:
                 rows.append({"movieId": movie_id, "names": names})
 
-    # create a new dataframe for the results
+    # create a new DataFrame for the results
     df = pd.DataFrame(rows, columns = ['movieId', 'names'])
     # converts the DataFrame to a csv-file
     df.to_csv("output.csv", index=False)
