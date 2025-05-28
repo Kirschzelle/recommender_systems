@@ -1,5 +1,6 @@
-from data import movies_df, cosine_similarity_matrix
+import time
 
+import data
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
@@ -57,12 +58,12 @@ def recommendation_placeholder(movie_id, recommendation_amount):
     return recommendations
 
 def recommendation_genre(movie_id, recommendation_amount):
-    if movie_id not in movies_df['movieId'].values:
+    if movie_id not in data.movies_df['movieId'].values:
         raise Exception(f"Movie ID {movie_id} not found.")
 
-    movie_index = movies_df[movies_df['movieId'] == movie_id].index[0]
+    movie_index = data.movies_df[data.movies_df['movieId'] == movie_id].index[0]
 
-    similarity_scores = list(enumerate(cosine_similarity_matrix[movie_index]))
+    similarity_scores = list(enumerate(data.genre_cosine_similarity_matrix[movie_index]))
     similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
 
     recommendations_ids = []
@@ -70,11 +71,50 @@ def recommendation_genre(movie_id, recommendation_amount):
     for idx, score in similarity_scores:
         if idx == movie_index:
             continue
-        recommendations_ids.append(idx)
+        recommendations_ids.append(int(data.movies_df.iloc[idx]['movieId']))
         count += 1
         if count >= recommendation_amount:
             break
     return recommendations_ids
 
 def recommendation_collaborators(movie_id, recommendation_amount):
-    pass
+    if movie_id not in data.movies_with_people_df['movieId'].values:
+        raise Exception(f"Movie ID {movie_id} not found.")
+
+    movie_index = data.movies_with_people_df[data.movies_with_people_df['movieId'] == movie_id].index[0]
+
+    similarity_scores = list(enumerate(data.collaborators_cosine_similarity_matrix[movie_index]))
+    similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+
+    recommendations_ids = []
+    count = 0
+    for idx, score in similarity_scores:
+        if idx == movie_index:
+            continue
+        recommendations_ids.append(int(data.movies_with_people_df.iloc[idx]['movieId']))
+        count += 1
+        if count >= recommendation_amount:
+            break
+    return recommendations_ids
+
+def print_time(elapsed_time):
+    hours, remaining = divmod(elapsed_time, 3600)
+    minutes, seconds = divmod(remaining, 60)
+    print(f"Time elapsed: {hours:02}:{minutes:02}:{seconds:02}")
+
+if __name__ == "__main__":
+    data.precompute()
+
+    print("Genre:")
+    start = time.time()
+    print(recommendation_genre(1, 10))
+    end = time.time()
+
+    print_time(end - start)
+
+    print("\nCollaborators:")
+    start = time.time()
+    print(recommendation_collaborators(1,10))
+    end = time.time()
+
+    print_time(end-start)
