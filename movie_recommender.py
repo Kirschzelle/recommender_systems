@@ -105,16 +105,20 @@ def print_time(elapsed_time):
 if __name__ == "__main__":
     data.precompute()
 
-    print("Genre:")
-    start = time.time()
-    print(recommendation_genre(1, 10))
-    end = time.time()
+    while(True):
+        i = int(input("Please enter movie ID: "))
+        print(type(i))
 
-    print_time(end - start)
+        print("Genre:")
+        start = time.time()
+        print(recommendation_genre(i, 10))
+        end = time.time()
 
-    print("\nCollaborators:")
-    start = time.time()
-    print(recommendation_collaborators(1,10))
-    end = time.time()
+        print_time(end - start)
 
-    print_time(end-start)
+        print("\nCollaborators:")
+        start = time.time()
+        print(recommendation_collaborators(i, 10))
+        end = time.time()
+
+        print_time(end - start)
