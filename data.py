@@ -20,10 +20,10 @@ def load_data():
 
     global people_df
     people_df = pd.read_csv("output.csv")
+    people_df["names"] = people_df["names"].apply(lambda x: x if pd.notna(x) else ["NO_DATA_AVAILABLE"])
 
     global movies_with_people_df
     movies_with_people_df = pd.merge(movies_df, people_df, how='left', on='movieId')
-    movies_with_people_df["names"] = movies_with_people_df["names"].apply(lambda x: ["NO_DATA_AVAILABLE"] if pd.isna(x) else x)
 
 def precompute():
     load_data()
@@ -47,9 +47,8 @@ def calculate_cosine_similarity_matrix(attr):
 
 # extracts the needed informations from all json-files
 def extract_information_from_json_to_csv():
-    # create a new dataframe for the results
-    df = pd.DataFrame(columns = ['movieId', 'names'])
     # iterate through the json-files
+    rows = []
     for filename in os.listdir("./extracted_content_ml-latest"):
         if filename.endswith(".json"):
             movie_id = filename.split('.')[0]
@@ -62,11 +61,11 @@ def extract_information_from_json_to_csv():
             if one_movie_metadata_df.__contains__("tmdb"):
                 credits = one_movie_metadata_df["tmdb"]["credits"]
 
-                cast = credits.get("cast")
+                cast = credits["cast"]
                 for i in range(len(cast)):
                     names.append(cast[i].get("name"))
 
-                crew = credits.get("crew")
+                crew = credits["crew"]
                 for i in range(len(crew)):
                     names.append(crew[i].get("name"))
 
@@ -89,8 +88,10 @@ def extract_information_from_json_to_csv():
 
             # only add the rows with more than zero actors to the DataFrame
             if len(names) != 0:
-                df.loc[len(df)] = {"movieId": movie_id, "names": names}
+                rows.append({"movieId": movie_id, "names": names})
 
+    # create a new dataframe for the results
+    df = pd.DataFrame(rows, columns = ['movieId', 'names'])
     # converts the DataFrame to a csv-file
     df.to_csv("output.csv", index=False)
 
