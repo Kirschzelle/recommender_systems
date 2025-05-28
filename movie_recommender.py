@@ -107,7 +107,6 @@ if __name__ == "__main__":
 
     while(True):
         i = int(input("Please enter movie ID: "))
-        print(type(i))
 
         print("Genre:")
         start = time.time()
