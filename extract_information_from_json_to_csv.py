@@ -4,13 +4,13 @@ import os
 import pandas as pd
 
 
-def extract_information_from_json_to_csv(self):
+def extract_information_from_json_to_csv(path):
     # iterate through the json-files
     rows = []
-    for filename in os.listdir("./datasets/extracted_content_ml-latest"):
+    for filename in os.listdir(path):
         if filename.endswith(".json"):
             movie_id = filename.split('.')[0]
-            one_movie_metadata_df = pd.read_json(f"./datasets/extracted_content_ml-latest/{filename}")
+            one_movie_metadata_df = pd.read_json(f"{path}/{filename}")
 
             # checks to determine which databases have informations about this movie saved.
             # The primary source for the people working on a movie is tmdb and the secondary movielens.
