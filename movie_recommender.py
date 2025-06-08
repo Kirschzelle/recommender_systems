@@ -1,3 +1,8 @@
+from data import Data
+from strategies.recommendation_genres import recommendation_genres
+from strategies.recommendation_collaborators import recommendation_collaborators
+
+
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
     Dispatches a movie recommendation request to one of several recommendation strategies.
@@ -18,14 +23,16 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
     
     if recommendation_amount != 5:
         print(f"Expected 5 recommendations. You requested {recommendation_amount}.  Are you sure you a different number of recommendations?")
-    
+
+    data = Data()
+
     match function_id:
         case 1:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 2:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return recommendation_genres(movie_id, recommendation_amount, data)
         case 3:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return recommendation_collaborators(movie_id, recommendation_amount, data)
         case 4:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 5:
