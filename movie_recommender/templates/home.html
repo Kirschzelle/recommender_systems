@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Movie Recommender</h1>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search for a movie..." required>
+    </form>
+
+    <div class="movie-results">
+        {% for movie in movies %}
+            <a href="{% url 'movie_detail' movie.id %}" class="movie-card">
+                <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+                <h2>{{ movie.title }}</h2>
+                <p>{{ movie.year }}</p>
+            </a>
+        {% empty %}
+            <p>No movies found.</p>
+        {% endfor %}
+    </div>
+
+    {% if movie_name %}
+    <h1>{{ movie_name }}</h1>
+    {% endif %}
+</div>
+{% endblock %}
