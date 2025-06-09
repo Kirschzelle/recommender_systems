@@ -11,8 +11,11 @@
         <h2>Results for "{{ query }}":</h2>
         <ul>
         {% for movie in movie_objects %}
-            <li>{{ movie.title }} ({{ movie.release_year }})</li>
-            <img src="{{ movie.poster.url }}" alt="{{ movie.title}} poster">
+            <div>
+                <a href="{% url 'detailed_view' movie.movie_id %}">
+                    <img src="{{ movie.poster.url }}" alt="{{ movie.title}} poster">
+                </a>
+            </div>
         {% endfor %}
         </ul>
     {% elif query %}

@@ -23,6 +23,7 @@ from recommender import views
 
 urlpatterns = [
     path('', views.home_view, name='home'),
+    path('detailed_view/<int:movie_id>/', views.detailed_movie_view, name='detailed_view'),
     path('admin/', admin.site.urls),
 ]
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Movie
 
 # Create your views here.
@@ -12,3 +12,10 @@ def home_view(request):
         "movie_objects": movie_objects
     }
     return render(request, "home.html", context)
+
+def detailed_movie_view(request, movie_id):
+    movie_object = get_object_or_404(Movie, movie_id = movie_id)
+    context = {
+        "movie": movie_object
+    }
+    return render(request, "detailed_view.html", context)
