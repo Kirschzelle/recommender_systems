@@ -13,7 +13,7 @@
         {% for movie in movie_objects %}
             <div>
                 <a href="{% url 'detailed_view' movie.movie_id %}">
-                    <img src="{{ movie.poster.url }}" alt="{{ movie.title}} poster">
+                    <img src="{{ movie.poster.url }}" alt="{{ movie.title}} poster" width="185" height="287">
                 </a>
             </div>
         {% endfor %}

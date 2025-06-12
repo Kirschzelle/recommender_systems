@@ -21,8 +21,28 @@ def main():
 if __name__ == '__main__':
     main()
 
+# Requirements
+# django: pip install django
+# Pillow: pip install pillow
 
 # Windows User: "env/Scripts/Activate.ps1" if you get an error try "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" and execute the first command again
-# Mac User: source/env/Scripts/activate
+# Mac User: 
+# python3 -m venv env
+# source env/bin/activate
+# pip install django
 
 # "python manage.py runserver" to start the server
+
+
+# Import data to the database
+# python manage.py makemigrations
+# python manage.py migrate
+# python manage.py shell
+# exec(open('load_movies.py').read())
+
+# The data should have following structure
+# recommender_systems/movie_recommender/datasets/information/ (https://drive.google.com/file/d/1je77e0Lq8naVUsjoOzk5RuI2H3ceHlSz/view rename the folder you download to information)
+# recommender_systems/movie_recommender/datasets/posters/ (https://www.kaggle.com/ghrzarea/movielens-20m-posters-for-machine-learning rename this folder you download to posters)
+# datasets folder should be on the same level as load_movies.py
+
+# 185 x 278 image format
