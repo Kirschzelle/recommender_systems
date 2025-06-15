@@ -1,3 +1,5 @@
+from .algorithm_random import get_random_recommendation
+
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
     Dispatches a movie recommendation request to one of several recommendation strategies.
@@ -21,7 +23,7 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
 
     match function_id:
         case 1:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return get_random_recommendation(recommendation_amount)
         case 2:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 3:
@@ -29,6 +31,8 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 4:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 5:
+            return recommendation_placeholder(movie_id, recommendation_amount)
+        case 6:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case _:
             return recommendation_placeholder(movie_id, recommendation_amount)

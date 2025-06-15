@@ -1,9 +1,25 @@
 body {
-    background-color: #141414;
+    background: linear-gradient(135deg, #141414, #1e1e1e);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .container {
@@ -30,7 +46,8 @@ form input[type="text"] {
     display: inline-block;
     text-decoration: none;
     color: white;
-    font-size: 20px;
+    margin-right: 8px;
+    font-size: 28px;
     margin-bottom: 20px;
     position: absolute;
     top: 20px;
@@ -57,17 +74,21 @@ form input[type="text"] {
 }
 
 .movie-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .movie-card img {
     display: block;
     width: 185px;
     height: 287px;
+    transition: transform 0.3s ease;
 }
 
 .reference-movie {
-    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.05);
     min-height: auto;
     padding: 40px 30px;
     display: flex;
@@ -112,4 +133,21 @@ form input[type="text"] {
     font-size: 1.1rem;
     line-height: 1.5;
     margin-bottom: 8px;
+}
+
+.reference-movie,
+.movie-card {
+    animation: fadeInUp 0.6s ease both;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

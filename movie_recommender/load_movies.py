@@ -100,7 +100,7 @@ for filename in os.listdir(info_dir):
         with open(poster_path, 'rb') as poster_file:
             movie.poster.save(f"{movie_id}.jpg", File(poster_file), save=False)
     else:
-        """print(f"No local poster found, importing '{title}' from web!")
+        print(f"No local poster found, importing '{title}' from web!")
         imdb_link = imdb_data.get("imdbLink")
         poster = get_poster_url(imdb_link)
         if poster:
@@ -109,9 +109,9 @@ for filename in os.listdir(info_dir):
                     image_data = response.read()
                     movie.poster.save(f"{movie_id}.jpg", ContentFile(image_data), save=False)
             except Exception as e:
-                print(f"Failed to download poster for {movie_id}: {e}")"""
-        with open(fallback_path, 'rb') as poster_file:
-            movie.poster.save(f"0_{movie_id}.jpg", File(poster_file), save=False)
+                print(f"Failed to download poster for {movie_id}: {e}")
+        #with open(fallback_path, 'rb') as poster_file:
+            #movie.poster.save(f"0_{movie_id}.jpg", File(poster_file), save=False)
             
     movie.save()
     print(f"Imported: {title} ({release_year}) ({movie_id}) ({directors}) ({genres})")

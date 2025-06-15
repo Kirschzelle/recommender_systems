@@ -25,9 +25,10 @@ def detailed_movie_view(request, movie_id):
         3: "TBA3",
         4: "TBA4",
         5: "TBA5",
+        6: "TBA6"
     }
     
-    for function_id in range(1, 6):
+    for function_id in range(1, 7):
         recommended_ids = get_recommendation(movie_id, recommendation_amount, function_id)
         recommended_movies = Movie.objects.filter(movie_id__in = recommended_ids)
         all_recommendations[f"{method_names[function_id]}"] = recommended_movies
