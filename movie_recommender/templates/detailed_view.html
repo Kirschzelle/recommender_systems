@@ -1,30 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">    
+<div class="container">
+    <a href="/" class="home-button">
+        <i class="fas fa-arrow-circle-left"></i>
+    </a>
     {% if movie %}
-        <h2>Your Reference Movie:</h2>
-        <h1>{{ movie.title }}</h1>
+    <section class="reference-movie">
+        <div class="poster">
+            <img src="{{ movie.poster.url }}" alt="{{ movie.title }} Poster" />
+        </div>
+        <div class="overlay">
+            <h4>Your Reference Movie:</h4>
+            <h1>{{ movie.title }}</h1>
 
-        {% if movie.release_year %}
-            <p>{{ movie.release_year }}</p>
-        {% endif %}
+            {% if movie.release_year %}
+                <p>{{ movie.release_year }}</p>
+            {% endif %}
 
-        {% if movie.overview %}
-            <p>{{ movie.overview }}</p>
-        {% endif %}
+            {% if movie.overview %}
+                <p>{{ movie.overview }}</p>
+            {% endif %}
 
-        {% if movie.actors %}
-            <p>Stars: {{ movie.actors }}</p>
-        {% endif %}
+            {% if movie.actors %}
+                <p><strong>Stars:</strong> {{ movie.actors }}</p>
+            {% endif %}
 
-        {% if movie.directors %}
-            <p>Directors: {{ movie.directors }}</p>
-        {% endif %}
+            {% if movie.directors %}
+                <p><strong>Directors:</strong> {{ movie.directors }}</p>
+            {% endif %}
 
-        {% if movie.genres %}
-            <p>Genres: {{ movie.genres }}</p>
-        {% endif %}
+            {% if movie.genres %}
+                <p><strong>Genres:</strong> {{ movie.genres }}</p>
+            {% endif %}
+        </div>
+    </section>
     {% endif %}
+
+    {% for method, movies in all_recommendations.items %}
+    <h2>Recommendations from Algorithm {{ method }}</h2>
+    <div class="movie-grid">
+        {% for movie in movies %}
+            <div class="movie-card">
+                <a href="{% url 'detailed_view' movie.movie_id %}">
+                    <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
+                </a>
+            </div>
+        {% empty %}
+            <p>No recommendations found for this method.</p>
+        {% endfor %}
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

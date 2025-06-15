@@ -1,11 +1,13 @@
+{% load static %}
 <!doctype html>
 <html>
-    <head>
-        <title>Movie Recommender</title>
-    </head>
-    <body>
-        {% block content %}
-
-        {% endblock %}
-    </body>
+<head>
+    <title>Movie Recommender</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
 </html>

@@ -18,7 +18,7 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
     
     if recommendation_amount != 5:
         print(f"Expected 5 recommendations. You requested {recommendation_amount}.  Are you sure you a different number of recommendations?")
-    
+
     match function_id:
         case 1:
             return recommendation_placeholder(movie_id, recommendation_amount)

@@ -2,6 +2,9 @@
 
 {% block content %}
 <div class="container">
+    <a href="/" class="home-button">
+        <i class="fas fa-home"></i>
+    </a>
     <h1>Movie Recommender</h1>
     <form method="GET">
         <input type="text" name="q" placeholder="Search for a movie..." required>
@@ -9,15 +12,15 @@
 
     {% if movie_objects %}
         <h2>Results for "{{ query }}":</h2>
-        <ul>
-        {% for movie in movie_objects %}
-            <div>
-                <a href="{% url 'detailed_view' movie.movie_id %}">
-                    <img src="{{ movie.poster.url }}" alt="{{ movie.title}} poster" width="185" height="287">
-                </a>
-            </div>
-        {% endfor %}
-        </ul>
+        <div class="movie-grid">
+            {% for movie in movie_objects %}
+                <div class="movie-card">
+                    <a href="{% url 'detailed_view' movie.movie_id %}">
+                        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} poster">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     {% elif query %}
         <p>No movies found matching "{{ query }}".</p>
     {% endif %}
