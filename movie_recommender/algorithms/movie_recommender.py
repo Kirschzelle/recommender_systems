@@ -1,4 +1,5 @@
-from .algorithm_random import get_random_recommendation
+from .algorithm_random import get_random_based_recommendation
+from .algorithm_image import get_image_based_recommendation
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
@@ -23,9 +24,9 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
 
     match function_id:
         case 1:
-            return get_random_recommendation(recommendation_amount)
+            return get_random_based_recommendation(recommendation_amount)
         case 2:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 4:

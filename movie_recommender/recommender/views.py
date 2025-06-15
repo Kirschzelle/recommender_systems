@@ -21,11 +21,11 @@ def detailed_movie_view(request, movie_id):
     all_recommendations = {}
     method_names = {
         1: "Random",
-        2: "TBA2",
-        3: "TBA3",
-        4: "TBA4",
-        5: "TBA5",
-        6: "TBA6"
+        2: "Image",
+        3: "Genre",
+        4: "Metadata",
+        5: "Plot",
+        6: "Title"
     }
     
     for function_id in range(1, 7):
