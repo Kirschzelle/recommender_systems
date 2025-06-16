@@ -3,6 +3,7 @@ import os
 
 import pandas as pd
 
+BASE_DIR = os.path.dirname(__file__)
 
 def extract_information_from_json_to_csv(path):
     # iterate through the json-files
@@ -46,4 +47,4 @@ def extract_information_from_json_to_csv(path):
     # create a new DataFrame for the results
     df = pd.DataFrame(rows, columns=['movieId', 'names'])
     # converts the DataFrame to a csv-file
-    df.to_csv("datasets/additional_data.csv", index=False)
+    df.to_csv(os.path.join(BASE_DIR, "datasets/additional_data.csv"), index=False)

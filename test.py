@@ -1,15 +1,35 @@
-from extract_information_from_json_to_csv import extract_information_from_json_to_csv
+import time
 
-from strategies.recommendation_collaborators import recommendation_collaborators
-from data import Data
-from strategies.recommendation_genres import recommendation_genres
+from movie_recommender.algorithms.recommendation_collaborators import recommendation_collaborators
+from movie_recommender.algorithms.recommendation_genres import recommendation_genres
+from movie_recommender.extract_information_from_json_to_csv import extract_information_from_json_to_csv
 
-extract_information_from_json_to_csv("./datasets/extracted_content_ml-latest")
+from movie_recommender.data import Data
 
-data = Data()
+def main():
+    start = time.time()
+    extract_information_from_json_to_csv("./movie_recommender/datasets/extracted_content_ml-latest")
+    end = time.time()
+    print(end-start)
 
-print(recommendation_genres(1,10,data))
+    while True:
+        start = time.time()
+        data = Data()
+        end = time.time()
+        print(end - start)
 
-print("\n")
+        i = int(input("Please enter movie ID: "))
+        start = time.time()
+        print(recommendation_genres(i, 10, data))
+        end = time.time()
+        print(end - start)
 
-print(recommendation_collaborators(1,10,data))
+        print("\n")
+
+        start = time.time()
+        print(recommendation_collaborators(i, 10, data))
+        end = time.time()
+        print(end - start)
+
+if __name__ == '__main__':
+    main()

@@ -1,10 +1,9 @@
-from data import Data
-from strategies.recommendation_genres import recommendation_genres
-from strategies.recommendation_collaborators import recommendation_collaborators
-
-
+from movie_recommender.data import Data
 from .algorithm_random import get_random_based_recommendation
 from .algorithm_image import get_image_based_recommendation
+from .recommendation_collaborators import recommendation_collaborators
+from .recommendation_genres import recommendation_genres
+
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
