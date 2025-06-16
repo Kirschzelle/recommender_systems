@@ -3,6 +3,9 @@ from strategies.recommendation_genres import recommendation_genres
 from strategies.recommendation_collaborators import recommendation_collaborators
 
 
+from .algorithm_random import get_random_based_recommendation
+from .algorithm_image import get_image_based_recommendation
+
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
     Dispatches a movie recommendation request to one of several recommendation strategies.
@@ -28,13 +31,13 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
 
     match function_id:
         case 1:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return get_random_based_recommendation(recommendation_amount)
         case 2:
-            return recommendation_genres(movie_id, recommendation_amount, data)
+            return get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
-            return recommendation_collaborators(movie_id, recommendation_amount, data)
+            return recommendation_genres(movie_id, recommendation_amount, data)
         case 4:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return recommendation_collaborators(movie_id, recommendation_amount, data)
         case 5:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case _:
