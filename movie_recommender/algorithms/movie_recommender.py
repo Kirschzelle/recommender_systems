@@ -1,4 +1,4 @@
-from movie_recommender.data import Data
+from .data import Data
 from .algorithm_random import get_random_based_recommendation
 from .algorithm_image import get_image_based_recommendation
 from .recommendation_collaborators import recommendation_collaborators

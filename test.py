@@ -4,7 +4,7 @@ from movie_recommender.algorithms.recommendation_collaborators import recommenda
 from movie_recommender.algorithms.recommendation_genres import recommendation_genres
 from movie_recommender.extract_information_from_json_to_csv import extract_information_from_json_to_csv
 
-from movie_recommender.data import Data
+from movie_recommender.algorithms.data import Data
 
 def main():
     start = time.time()
