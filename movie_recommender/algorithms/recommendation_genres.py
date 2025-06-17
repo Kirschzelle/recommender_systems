@@ -9,7 +9,7 @@ def recommendation_genres(movie_id, recommendation_amount, data):
 
     recommendations_ids = []
     count = 0
-    for idx, score in similarity_scores:
+    for idx, _ in similarity_scores:
         if idx == movie_index:
             continue
         recommendations_ids.append(int(data.movies_df.iloc[idx]['movieId']))
