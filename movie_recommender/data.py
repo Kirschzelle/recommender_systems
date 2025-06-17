@@ -3,8 +3,7 @@ import os
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MultiLabelBinarizer
-
-BASE_DIR = os.path.dirname(__file__)
+from movie_recommender.settings import BASE_DIR
 
 class Data:
     instance = None
@@ -17,10 +16,10 @@ class Data:
     collaborators_cosine_similarity_matrix = None
 
     def load_data(self):
-        self.movies_df = pd.read_csv(os.path.join(BASE_DIR, "datasets/ml-20m/../datasets/ml-20m/movies.csv"))
+        self.movies_df = pd.read_csv(os.path.join(BASE_DIR, "datasets/ml-20m/movies.csv"))
         self.movies_df['genres'] = self.movies_df['genres'].apply(lambda x: x.split('|'))
 
-        self.additional_data_df = pd.read_csv(os.path.join(BASE_DIR, "datasets/../datasets/additional_data.csv"))
+        self.additional_data_df = pd.read_csv(os.path.join(BASE_DIR, "datasets/additional_data.csv"))
 
         self.movies_with_people_df = pd.merge(self.movies_df, self.additional_data_df, how='left', on='movieId')
         self.movies_with_people_df["names"] = self.movies_with_people_df["names"].apply(
