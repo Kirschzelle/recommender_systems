@@ -1,9 +1,5 @@
-from movie_recommender.data import Data
 from .algorithm_random import get_random_based_recommendation
 from .algorithm_image import get_image_based_recommendation
-from .recommendation_collaborators import recommendation_collaborators
-from .recommendation_genres import recommendation_genres
-
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
@@ -26,18 +22,18 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
     if recommendation_amount != 5:
         print(f"Expected 5 recommendations. You requested {recommendation_amount}.  Are you sure you a different number of recommendations?")
 
-    data = Data()
-
     match function_id:
         case 1:
             return get_random_based_recommendation(recommendation_amount)
         case 2:
             return get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
-            return recommendation_genres(movie_id, recommendation_amount, data)
+            return recommendation_placeholder(movie_id, recommendation_amount)
         case 4:
-            return recommendation_collaborators(movie_id, recommendation_amount, data)
+            return recommendation_placeholder(movie_id, recommendation_amount)
         case 5:
+            return recommendation_placeholder(movie_id, recommendation_amount)
+        case 6:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case _:
             return recommendation_placeholder(movie_id, recommendation_amount)
