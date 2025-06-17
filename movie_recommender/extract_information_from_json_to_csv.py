@@ -1,9 +1,8 @@
 # extracts the needed informations from all json-files
 import os
-
 import pandas as pd
 
-BASE_DIR = os.path.dirname(__file__)
+from movie_recommender.settings import BASE_DIR
 
 def extract_information_from_json_to_csv(path):
     # iterate through the json-files
