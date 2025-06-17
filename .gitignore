@@ -9,6 +9,7 @@ __pycache__/
 *.jpg
 *.txt
 *.DS_Store
+.vs/
 
 # C extensions
 *.so
