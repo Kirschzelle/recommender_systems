@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from pathlib import Path
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -15,17 +16,17 @@ def load_tag_matrix(data_dir):
       '''
     
     # Check if data_dir is a valid Path object
-    if not isinstance(data_dir, Path):
-        raise TypeError("data_dir must be a Path object")
+    # if not isinstance(data_dir,Path):
+    #     raise TypeError("data_dir must be a Path object")
 
     # Check if data directory exists
-    if not data_dir.exists():
-        raise FileNotFoundError(f"Data directory not found at: {data_dir}")
+    # if not data_dir.exists():
+    #     raise FileNotFoundError(f"Data directory not found at: {data_dir}")
 
     # Check if genome-scores.csv exists
-    genome_scores_path = data_dir / "genome-scores.csv"
-    if not genome_scores_path.exists():
-        raise FileNotFoundError(f"genome-scores.csv not found in {data_dir}")
+    genome_scores_path = os.path.join(data_dir, "genome-scores.csv")
+    # if not genome_scores_path.exists():
+    #     raise FileNotFoundError(f"genome-scores.csv not found in {data_dir}")
 
     try:
         #load the data for genome-scores.csv which is the tag data
@@ -42,8 +43,8 @@ def load_tag_matrix(data_dir):
         raise ValueError("genome-scores.csv is empty")
     except pd.errors.ParserError:
         raise ValueError("Error parsing genome-scores.csv - file may be corrupted or in wrong format")
-    except Exception as e:
-        raise Exception(f"Unexpected error loading genome-scores.csv: {str(e)}")
+    # except Exception as e:
+    #     raise Exception(f"Unexpected error loading genome-scores.csv: {str(e)}")
 
 
 class TagRecommender:
@@ -92,8 +93,9 @@ class TagRecommender:
 
 if __name__ == "__main__":
     # Initialize the recommender system (this will precompute all similarities)
-    project_path = Path.cwd()
-    data_dir = project_path / "data" / "ml-20m"
+    project_path = os.getcwd()
+    
+    data_dir = os.path.join(project_path, "data", "ml-20m")
     
     # Create recommender instance (this will precompute similarities)
     recommender = TagRecommender(data_dir)
