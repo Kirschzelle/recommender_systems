@@ -15,24 +15,19 @@ def load_tag_matrix(data_dir):
             and values are relevance scores.     
       '''
     
-    # Check if data_dir is a valid Path object
-    # if not isinstance(data_dir,Path):
-    #     raise TypeError("data_dir must be a Path object")
+    if not isinstance(data_dir,str):
+        raise TypeError("data_dir must be a string")
 
-    # Check if data directory exists
-    # if not data_dir.exists():
-    #     raise FileNotFoundError(f"Data directory not found at: {data_dir}")
+    if not os.path.exists(data_dir):
+        raise FileNotFoundError(f"Data directory not found at: {data_dir}")
 
-    # Check if genome-scores.csv exists
     genome_scores_path = os.path.join(data_dir, "genome-scores.csv")
-    # if not genome_scores_path.exists():
-    #     raise FileNotFoundError(f"genome-scores.csv not found in {data_dir}")
+    
+    if not os.path.exists(genome_scores_path):
+        raise FileNotFoundError(f"genome-scores.csv not found in {data_dir}")
 
     try:
-        #load the data for genome-scores.csv which is the tag data
         tag_df = pd.read_csv(genome_scores_path)
-        
-        # Create tag matrix
         tag_matrix = tag_df.pivot(index="movieId",
                                 columns="tagId", 
                                 values="relevance").fillna(0)
@@ -43,8 +38,8 @@ def load_tag_matrix(data_dir):
         raise ValueError("genome-scores.csv is empty")
     except pd.errors.ParserError:
         raise ValueError("Error parsing genome-scores.csv - file may be corrupted or in wrong format")
-    # except Exception as e:
-    #     raise Exception(f"Unexpected error loading genome-scores.csv: {str(e)}")
+    except Exception as e:
+        raise Exception(f"Unexpected error loading genome-scores.csv: {str(e)}")
 
 
 class TagRecommender:
@@ -56,10 +51,10 @@ class TagRecommender:
         data_dir (Path): Path to the data directory containing the MovieLens dataset
         """
         self.tag_matrix = load_tag_matrix(data_dir)
-        print("Computing similarity matrix for all movies...")
+        print("Computing similarity matrix by tag for all movies...")
         self.similarity_matrix = cosine_similarity(self.tag_matrix)
         self.movie_ids = self.tag_matrix.index.tolist()
-        print("Recommender system ready!")
+        print("Recommender system based on tag is ready!")
 
     def get_recommendations(self, movie_id, recommendation_amount):
         """
@@ -91,30 +86,34 @@ class TagRecommender:
             raise ValueError(f"Movie ID {movie_id} not found in the dataset")
 
 
-if __name__ == "__main__":
-    # Initialize the recommender system (this will precompute all similarities)
-    project_path = os.getcwd()
+def get_tag_based_recommendation(movie_id, recommendation_amount):
+    """
+    Get movie recommendations using precomputed tag similarities.
+    """
+    try:
+        this_dir=os.path.dirname(__file__)
+        data_dir=os.path.abspath(os.path.join(this_dir, "..", "datasets", "ml-20m"))
+        recommender = TagRecommender(data_dir)
+        recommendations = recommender.get_recommendations(movie_id, recommendation_amount)
+        return recommendations
     
-    data_dir = os.path.join(project_path, "data", "ml-20m")
+    except Exception as e:
+        raise Exception(f"Error getting tag-based recommendations: {str(e)}")
+
+#for tests
+# if __name__ == "__main__":
+   
+#     # Example usage
+#     movie_id = 599
+#     recommendation_amount = 5
     
-    # Create recommender instance (this will precompute similarities)
-    recommender = TagRecommender(data_dir)
-    
-    # Example usage
-    movie_id = 5
-    recommendation_amount = 5
-    
-    # Get recommendations (this will be fast since similarities are precomputed)
-    recommendations = recommender.get_recommendations(movie_id, recommendation_amount)
-    print(f"\nTop {recommendation_amount} recommendations for movie {movie_id}:")
-    print(recommendations)
+#     # Get recommendations (this will be fast since similarities are precomputed)
+#     recommendations = get_tag_based_recommendation(movie_id, recommendation_amount)
+#     print(f"\nTop {recommendation_amount} recommendations for movie {movie_id}:")
+#     print(recommendations)
 
 
-    movie_id=6
-    recommendation_amount=5
-    recommendations = recommender.get_recommendations(movie_id, recommendation_amount)
-    print(f"\nTop {recommendation_amount} recommendations for movie {movie_id}:")
-    print(recommendations)
+
 
 
 
