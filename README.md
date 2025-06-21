@@ -39,7 +39,7 @@ Ensure the following folder structure is present in the root `movie_recommender/
 movie_recommender/
 └── datasets/
     ├── information/   # Rename downloaded folder to 'information'
-    └── posters/       # Rename downloaded folder to 'posters'
+    ├── posters/       # Rename downloaded folder to 'posters'
     └── ml-20m/
 ```
 
