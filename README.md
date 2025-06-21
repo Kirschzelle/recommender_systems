@@ -21,3 +21,8 @@ The final task lies in the evaluation of the different strategies. Try out at le
 - Intermediate meeting (20.05.2025): Each project team presents an update on the current state of their design and implementation of the project. Presentation time per team is 20 minutes.
 - Final meeting (24.06.2025): Each project team presents their final software solution and the outcomes of their analyses. Presentation time per team is 30 minutes max.
 - Final deadline (15.07.2025): Deadline for submitting the project code including light documentation and the report by email to dietmar.jannach@aau.at
+
+# Requirements
+
+Make sure you have python 3.10.3 installed. (Especially on mac a different python version might break it!)
+Install requirements.
