@@ -90,6 +90,15 @@ python manage.py run_all --fetch-posters
 
 > Note: Enabling `--fetch-posters` will significantly increase the time it takes to build the database.
 
+### Alternative: Run Video Import only.
+
+Be advised that for quick testing of your own specific algorithm you can skip the computations for the image algorithm. In this case run the following:
+```bash
+python manage.py import-videos
+```
+
+> Note: You can use `--clear` to remove previous imports before running the import.
+
 ### Step 7: Start the Server
 
 ```bash
