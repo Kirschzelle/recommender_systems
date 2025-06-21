@@ -24,7 +24,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS("Embeddings complete."))
 
             self.stdout.write(self.style.NOTICE("Computing image-based recommendations."))
-            call_command("build_image_recommendations", top_k=5, num_trees=100)
+            call_command("build_image_recommendations", top_k=5, num_trees=1000)
             self.stdout.write(self.style.SUCCESS("Recommendations complete."))
 
             self.stdout.write(self.style.SUCCESS("Preprocessing finished."))
