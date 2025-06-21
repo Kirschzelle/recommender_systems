@@ -7,9 +7,10 @@ __pycache__/
 *.json
 *.csv
 *.jpg
-*.txt
 *.DS_Store
 .vs/
+movie_recommender/datasets/*
+movie_recommender/media
 
 # C extensions
 *.so
