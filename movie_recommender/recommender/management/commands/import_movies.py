@@ -40,8 +40,12 @@ class Command(BaseCommand):
         fallback_path = os.path.join(poster_dir, "0.png")
 
         if options['clear']:
-            Movie.objects.all().delete()
-            self.stdout.write(self.style.WARNING("Deleted all existing movies."))
+            confirm = input("Are you sure you want to delete all existing movies? Type 'yes' to continue: ")
+            if confirm.lower() == 'yes':
+                Movie.objects.all().delete()
+                self.stdout.write(self.style.WARNING("Deleted all existing movies."))
+            else:
+                self.stdout.write(self.style.WARNING("Aborted movie deletion."))
 
         files = [f for f in os.listdir(info_dir) if f.endswith(".json")]
         for filename in tqdm(files, desc="Importing movies", unit="file"):

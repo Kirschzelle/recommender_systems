@@ -73,6 +73,7 @@ python manage.py migrate
 python manage.py run_all
 ```
 
+This will prompt you to delete all existing movies. Type 'yes'.
 If you want to fetch missing movie posters from the internet, do the following:
 
 1. Export your TMDB API key:
