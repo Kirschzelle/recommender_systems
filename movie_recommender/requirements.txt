@@ -5,3 +5,5 @@ Pillow>=9.0.0
 numpy>=1.21.0
 tqdm
 annoy
+requests>=2.25
+duckduckgo-search>=0.9

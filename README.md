@@ -22,7 +22,77 @@ The final task lies in the evaluation of the different strategies. Try out at le
 - Final meeting (24.06.2025): Each project team presents their final software solution and the outcomes of their analyses. Presentation time per team is 30 minutes max.
 - Final deadline (15.07.2025): Deadline for submitting the project code including light documentation and the report by email to dietmar.jannach@aau.at
 
-# Requirements
+## Requirements & Setup
 
-Make sure you have python 3.10.3 installed. (Especially on mac a different python version might break it!)
-Install requirements.
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/Kirschzelle/recommender_systems.git
+cd recommender_systems/movie_recommender
+```
+
+### Step 2: Dataset Setup
+
+Ensure the following folder structure is present in the root `movie_recommender/` directory:
+
+```
+movie_recommender/
+└── datasets/
+    ├── information/   # Rename downloaded folder to 'information'
+    └── posters/       # Rename downloaded folder to 'posters'
+```
+
+- Download `information/` data from [Google Drive](https://drive.google.com/file/d/1je77e0Lq8naVUsjoOzk5RuI2H3ceHlSz/view) and rename the folder to `information`.
+- Download `posters/` data from [Kaggle](https://www.kaggle.com/ghrzarea/movielens-20m-posters-for-machine-learning) and rename the folder to `posters`.
+- **Do not delete `0.png`** in the `posters/` folder — it is used as a fallback image.
+
+### Step 3: Python Version
+
+Ensure you're using **Python 3.10.3**. Other versions, especially on macOS, may cause issues.
+
+### Step 4: Install Dependencies
+
+Install required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 5: Run Django Setup
+
+Run the following commands to apply migrations:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### Step 6: Run the Full Pipeline
+
+```bash
+python manage.py run_all
+```
+
+If you want to fetch missing movie posters from the internet, do the following:
+
+1. Export your TMDB API key:
+
+```bash
+export TMDB_API_KEY=your_api_key_here
+```
+
+2. Then run:
+
+```bash
+python manage.py run_all --fetch-posters
+```
+
+> Note: Enabling `--fetch-posters` will significantly increase the time it takes to build the database.
+
+### Step 7: Start the Server
+
+```bash
+python manage.py runserver
+```
+
+The application will now be accessible at `http://127.0.0.1:8000/`.
