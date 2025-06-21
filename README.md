@@ -44,6 +44,7 @@ movie_recommender/
 
 - Download `information/` data from [Google Drive](https://drive.google.com/file/d/1je77e0Lq8naVUsjoOzk5RuI2H3ceHlSz/view) and rename the folder to `information`.
 - Download `posters/` data from [Kaggle](https://www.kaggle.com/ghrzarea/movielens-20m-posters-for-machine-learning) and rename the folder to `posters`.
+- Download `ml-20m` data from [Movielens](https://grouplens.org/datasets/movielens/).
 - **Do not delete `0.png`** in the `posters/` folder — it is used as a fallback image.
 
 ### Step 3: Python Version
