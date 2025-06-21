@@ -40,6 +40,7 @@ movie_recommender/
 └── datasets/
     ├── information/   # Rename downloaded folder to 'information'
     └── posters/       # Rename downloaded folder to 'posters'
+    └── ml-20m/
 ```
 
 - Download `information/` data from [Google Drive](https://drive.google.com/file/d/1je77e0Lq8naVUsjoOzk5RuI2H3ceHlSz/view) and rename the folder to `information`.
