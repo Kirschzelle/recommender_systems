@@ -95,4 +95,8 @@ def get_tag_based_recommendation(movie_id, recommendation_amount):
     """
 
     return tag_data.recommender.get_recommendations(movie_id, recommendation_amount)
+<<<<<<< HEAD
  
+=======
+ 
+>>>>>>> algorithm/plot-title
