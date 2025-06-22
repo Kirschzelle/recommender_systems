@@ -39,6 +39,8 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
             return recommendation_collaborators(movie_id, recommendation_amount, data)
         case 5:
             return recommendation_placeholder(movie_id, recommendation_amount)
+        case 6:
+            return recommendation_placeholder(movie_id, recommendation_amount)
         case _:
             return recommendation_placeholder(movie_id, recommendation_amount)
     

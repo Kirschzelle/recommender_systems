@@ -6,7 +6,6 @@ from movie_recommender.settings import BASE_DIR
 from data import Data
 
 class RecommenderConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'recommender'
 
     def ready(self):

@@ -1,0 +1,9 @@
+Django>=4.0
+torch>=1.13.1
+open-clip-torch>=2.20.0
+Pillow>=9.0.0
+numpy>=1.21.0
+tqdm
+annoy
+requests>=2.25
+duckduckgo-search>=0.9
