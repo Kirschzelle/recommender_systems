@@ -7,3 +7,7 @@ tqdm
 annoy
 requests>=2.25
 duckduckgo-search>=0.9
+gensim>=4.3.3
+nltk>=3.9.1
+scikit-learn>=1.7.0
+regex>=2024.11.6
