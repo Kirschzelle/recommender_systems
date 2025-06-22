@@ -35,15 +35,27 @@ def extract_information_from_json_to_csv(path):
             # remove all duplicate names
             names = list(dict.fromkeys(names))
 
+            genres = []
+            if one_movie_metadata_df.__contains__("tmdb"):
+                gs = one_movie_metadata_df["tmdb"]["genres"]
+                genres = [genre.get("name") for genre in gs if genre.get("name")]
+
+            elif one_movie_metadata_df.__contains__("imdb"):
+                genres = one_movie_metadata_df["imdb"]["genres"]
+
+            elif one_movie_metadata_df.__contains__("movielens"):
+                genres = one_movie_metadata_df["movielens"]["genres"]
+
+
             """
             Here other types of information can be extracted. 
             """
 
             # only add the rows with more than zero actors
             if len(names) != 0:
-                rows.append({"movieId": movie_id, "names": names})
+                rows.append({"movieId": movie_id, "names": names, "genres": genres})
 
     # create a new DataFrame for the results
-    df = pd.DataFrame(rows, columns=['movieId', 'names'])
+    df = pd.DataFrame(rows, columns=['movieId', 'names', 'genres'])
     # converts the DataFrame to a csv-file
     df.to_csv(os.path.join(BASE_DIR, "datasets/additional_data.csv"), index=False)
