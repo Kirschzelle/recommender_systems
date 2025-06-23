@@ -27,6 +27,10 @@ def extract_information_from_json_to_csv(path):
                 for i in range(len(crew)):
                     names.append(crew[i].get("name"))
 
+                companies = one_movie_metadata_df["tmdb"]["production_companies"]
+                for i in range(len(companies)):
+                    names.append(companies[i].get("name"))
+
             elif one_movie_metadata_df.__contains__("movielens"):
                 people = one_movie_metadata_df["movielens"]["directors"]
                 people.extend(one_movie_metadata_df["movielens"]["actors"])
