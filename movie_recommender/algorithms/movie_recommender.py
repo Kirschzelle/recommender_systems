@@ -32,7 +32,7 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 1:
             return get_random_based_recommendation(recommendation_amount)
         case 2:
-            return get_image_based_recommendation(movie_id, recommendation_amount)
+            return []#get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
             return recommendation_genres(movie_id, recommendation_amount, data)
         case 4:
