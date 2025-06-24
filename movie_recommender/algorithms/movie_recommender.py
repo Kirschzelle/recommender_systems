@@ -29,7 +29,11 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 2:
             return get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
-            return get_tag_based_recommendation(movie_id, recommendation_amount)
+            try:
+                return get_tag_based_recommendation(movie_id, recommendation_amount)
+            except Exception as e:
+                print(f"Tag based recommendation failed with error: {e}")
+                return recommendation_placeholder(movie_id, recommendation_amount)
         case 4:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 5:
