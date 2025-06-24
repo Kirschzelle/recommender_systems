@@ -115,7 +115,7 @@ class Command(BaseCommand):
                 for movie_id, _ in self.missing_movies:
                     movie = Movie.objects.get(pk=movie_id)
                     with open(fallback_path, 'rb') as f:
-                        movie.poster.save(f"0_{movie_id}.png", File(f), save=False)
+                        movie.poster.save(f"0_{movie_id}.png", File(f), save=True)
 
         self.stdout.write(self.style.SUCCESS("🎉 Import complete."))
 
