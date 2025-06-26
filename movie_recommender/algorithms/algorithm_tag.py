@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+from annoy import AnnoyIndex
 
 
 def load_tag_matrix(data_dir):
@@ -43,20 +44,24 @@ def load_tag_matrix(data_dir):
 class TagRecommender:
     def __init__(self, data_dir):
         """
-        Initialize the recommender system by loading and precomputing similarities.
+        Initialize the recommender system by loading and precomputing similarities using Annoy.
         
         Parameters:
         data_dir (Path): Path to the data directory containing the MovieLens dataset
         """
-        self.tag_matrix = load_tag_matrix(data_dir)
-        print("Computing similarity matrix by tag for all movies...")
-        self.similarity_matrix = cosine_similarity(self.tag_matrix)
+        self.tag_matrix = load_tag_matrix(data_dir).astype(np.float32)
         self.movie_ids = self.tag_matrix.index.tolist()
-        print("Recommender system based on tag is ready!")
+        num_movies, num_tags = self.tag_matrix.shape
+        print("Building Annoy index for tag-based similarity search...")
+        self.annoy_index = AnnoyIndex(num_tags, 'angular')  # 'angular' is cosine distance
+        for i, movie_id in enumerate(self.movie_ids):
+            self.annoy_index.add_item(i, self.tag_matrix.iloc[i].values)
+        self.annoy_index.build(50)  # You can increase the number of trees for more accuracy
+        print("Annoy index for tag-based recommender is ready!")
 
     def get_recommendations(self, movie_id, recommendation_amount):
         """
-        Get movie recommendations using precomputed tag similarities.
+        Get movie recommendations using Annoy for tag similarities.
 
         Parameters:
         movie_id (int): The MovieLens ID of the reference movie
@@ -65,16 +70,17 @@ class TagRecommender:
         Returns:
         list: MovieIds of the most similar movies to the input movie based on tag similarity
         """
+        if movie_id not in self.movie_ids:
+            raise ValueError(f"Movie ID {movie_id} not found in the dataset (no tags available)")
         try:
             movie_idx = self.movie_ids.index(movie_id)
-            similarities = self.similarity_matrix[movie_idx]
-            top_indices = np.argsort(similarities)[::-1][1:recommendation_amount+1]
+            # Get n+1 because the first result will be the movie itself
+            top_indices = self.annoy_index.get_nns_by_item(movie_idx, recommendation_amount + 1)[1:recommendation_amount+1]
             recommendations = [self.movie_ids[idx] for idx in top_indices]
-            
             return recommendations
-            
         except ValueError:
             raise ValueError(f"Movie ID {movie_id} not found in the dataset")
+
 class TagData:
     _instance = None
 
@@ -96,30 +102,30 @@ def get_tag_based_recommendation(movie_id, recommendation_amount):
 
     return tag_data.recommender.get_recommendations(movie_id, recommendation_amount)
  
-#for tests
-if __name__ == "__main__":
+# #for tests
+# if __name__ == "__main__":
 
-    # 1) Load the movies metadata so we can map IDs → titles
-    this_dir   = os.path.dirname(__file__)
-    csv_path   = os.path.abspath(os.path.join(this_dir, "..", "datasets", "ml-20m", "movies.csv"))
-    movies_df  = pd.read_csv(csv_path)
-    id_to_title = dict(zip(movies_df["movieId"], movies_df["title"]))
+#     # 1) Load the movies metadata so we can map IDs → titles
+#     this_dir   = os.path.dirname(__file__)
+#     csv_path   = os.path.abspath(os.path.join(this_dir, "..", "datasets", "ml-20m", "movies.csv"))
+#     movies_df  = pd.read_csv(csv_path)
+#     id_to_title = dict(zip(movies_df["movieId"], movies_df["title"]))
 
-    # 2) Pick a test movie by ID (or you could reverse‐lookup by title here)
-    movie_id             = 5
-    recommendation_amount = 5
+#     # 2) Pick a test movie by ID (or you could reverse‐lookup by title here)
+#     movie_id             = 5
+#     recommendation_amount = 5
 
-    # 3) Get your recommendations (list of IDs)
-    rec_ids = get_tag_based_recommendation(movie_id, recommendation_amount)
+#     # 3) Get your recommendations (list of IDs)
+#     rec_ids = get_tag_based_recommendation(movie_id, recommendation_amount)
 
-    # 4) Map IDs to titles
-    rec_titles = [id_to_title.get(mid, f"<Unknown ID {mid}>") for mid in rec_ids]
+#     # 4) Map IDs to titles
+#     rec_titles = [id_to_title.get(mid, f"<Unknown ID {mid}>") for mid in rec_ids]
 
-    # 5) Print human‐friendly output
-    test_title = id_to_title.get(movie_id, str(movie_id))
-    print(f"\nTop {recommendation_amount} recommendations for “{test_title}”:")
-    for i, title in enumerate(rec_titles, start=1):
-        print(f"{i}. {title}")
+#     # 5) Print human‐friendly output
+#     test_title = id_to_title.get(movie_id, str(movie_id))
+#     print(f"\nTop {recommendation_amount} recommendations for “{test_title}”:")
+#     for i, title in enumerate(rec_titles, start=1):
+#         print(f"{i}. {title}")
 
 
 

@@ -1,6 +1,7 @@
 from .algorithm_random import get_random_based_recommendation
 from .algorithm_image import get_image_based_recommendation
-from .algorithm_tag    import get_tag_based_recommendation          
+from .algorithm_tag    import get_tag_based_recommendation   
+from .algorithm_plot_topic import get_plot_based_recommendation       
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
@@ -39,7 +40,7 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 5:
             return recommendation_placeholder(movie_id, recommendation_amount)
         case 6:
-            return recommendation_placeholder(movie_id, recommendation_amount)
+            return get_plot_based_recommendation(movie_id, recommendation_amount)
         case _:
             return recommendation_placeholder(movie_id, recommendation_amount)
     

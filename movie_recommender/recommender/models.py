@@ -25,3 +25,17 @@ class MovieImageEmbedding(models.Model):
 class MovieImageRecommendation(models.Model):
     movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="image_recommendations")
     recommended_movies = models.JSONField()
+
+class MovieLdaEmbedding(models.Model):
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="lda_embedding")
+    embedding = models.BinaryField()
+
+    def set_embedding(self, vector):
+        self.embedding = np.asarray(vector, dtype=np.float32).tobytes()
+
+    def get_embedding(self):
+        return np.frombuffer(self.embedding, dtype=np.float32)
+
+class MoviePlotRecommendation(models.Model):
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="plot_recommendations")
+    recommended_movies = models.JSONField()
