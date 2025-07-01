@@ -25,3 +25,11 @@ class MovieImageEmbedding(models.Model):
 class MovieImageRecommendation(models.Model):
     movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="image_recommendations")
     recommended_movies = models.JSONField()
+
+class MovieGenreRecommendation(models.Model):
+    movie = models.ForeignKey("Movie", on_delete=models.CASCADE, related_name="genre_recommendations")
+    recommended_movies = models.JSONField()
+
+class MovieCollaboratorRecommendation(models.Model):
+    movie = models.ForeignKey("Movie", on_delete=models.CASCADE, related_name="collaboratour_recommendations")
+    recommended_movies = models.JSONField()
