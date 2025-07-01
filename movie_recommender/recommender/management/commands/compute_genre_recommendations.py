@@ -1,5 +1,3 @@
-# recommender/management/commands/compute_genre_recommendations.py
-
 from django.core.management.base import BaseCommand
 from annoy import AnnoyIndex
 import numpy as np
