@@ -7,3 +7,6 @@ tqdm
 annoy
 requests>=2.25
 duckduckgo-search>=0.9
+faiss-cpu
+pandas
+scikit-learn
