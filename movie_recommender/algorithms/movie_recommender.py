@@ -1,6 +1,8 @@
+from .algorithm_collaborators import get_collaborators_recommendations
+from .algorithm_genre import get_genre_recommendations
 from .algorithm_random import get_random_based_recommendation
 from .algorithm_image import get_image_based_recommendation
-from .algorithm_tag    import get_tag_based_recommendation          
+from .algorithm_tag    import get_tag_based_recommendation
 
 def get_recommendation(movie_id, recommendation_amount, function_id):
     """
@@ -29,17 +31,17 @@ def get_recommendation(movie_id, recommendation_amount, function_id):
         case 2:
             return get_image_based_recommendation(movie_id, recommendation_amount)
         case 3:
+            return get_genre_recommendations(movie_id, recommendation_amount)
+        case 4:
+            return get_collaborators_recommendations(movie_id, recommendation_amount)
+        case 5:
+            return recommendation_placeholder(movie_id, recommendation_amount)
+        case 6:
             try:
                 return get_tag_based_recommendation(movie_id, recommendation_amount)
             except Exception as e:
                 print(f"Tag based recommendation failed with error: {e}")
                 return recommendation_placeholder(movie_id, recommendation_amount)
-        case 4:
-            return recommendation_placeholder(movie_id, recommendation_amount)
-        case 5:
-            return recommendation_placeholder(movie_id, recommendation_amount)
-        case 6:
-            return recommendation_placeholder(movie_id, recommendation_amount)
         case _:
             return recommendation_placeholder(movie_id, recommendation_amount)
     
