@@ -1,6 +1,5 @@
 from recommender.models import MovieGenreRecommendation
 
-
 def get_genre_recommendations(movie_id, num_recommendations):
     try:
         recommendations = MovieGenreRecommendation.objects.get(movie_id=movie_id)
