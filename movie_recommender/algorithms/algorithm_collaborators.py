@@ -1,6 +1,5 @@
 from recommender.models import MovieCollaboratorRecommendation
 
-
 def get_collaborators_recommendations(movie_id, num_recommendations):
     try:
         recommendations = MovieCollaboratorRecommendation.objects.get(movie_id=movie_id)
