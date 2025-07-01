@@ -27,6 +27,14 @@ class Command(BaseCommand):
             call_command("build_image_recommendations", top_k=5, num_trees=1000)
             self.stdout.write(self.style.SUCCESS("Recommendations complete."))
 
+            self.stdout.write(self.style.NOTICE("Computing genre-based recommendations."))
+            call_command("compute_genre_recommendations", top_k=5)
+            self.stdout.write(self.style.SUCCESS("Recommendations complete."))
+
+            self.stdout.write(self.style.NOTICE("Computing collaborator-based recommendations."))
+            call_command("compute_collaborator_recommendations", top_k=5)
+            self.stdout.write(self.style.SUCCESS("Recommendations complete."))
+
             self.stdout.write(self.style.SUCCESS("Preprocessing finished."))
 
         except CommandError as e:
