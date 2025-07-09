@@ -33,3 +33,12 @@ class MovieGenreRecommendation(models.Model):
 class MovieCollaboratorRecommendation(models.Model):
     movie = models.ForeignKey("Movie", on_delete=models.CASCADE, related_name="collaboratour_recommendations")
     recommended_movies = models.JSONField()
+
+class MoviePlotRecommendation(models.Model):
+    movie = models.ForeignKey("Movie", on_delete=models.CASCADE, related_name="plot_recommendations")
+    recommended_movies = models.JSONField()
+
+class MovieLdaEmbedding(models.Model):
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE, related_name="lda_embedding")
+    embedding = models.BinaryField()
+
