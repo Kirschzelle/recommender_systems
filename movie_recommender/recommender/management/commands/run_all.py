@@ -35,6 +35,10 @@ class Command(BaseCommand):
             call_command("compute_collaborator_recommendations", top_k=5)
             self.stdout.write(self.style.SUCCESS("Recommendations complete."))
 
+            self.stdout.write(self.style.NOTICE("Computing plot-based recommendations."))
+            call_command("build_plot_recommendations", top_k=5)
+            self.stdout.write(self.style.SUCCESS("Recommendations complete."))
+
             self.stdout.write(self.style.SUCCESS("Preprocessing finished."))
 
         except CommandError as e:

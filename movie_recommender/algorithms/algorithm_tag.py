@@ -95,36 +95,3 @@ def get_tag_based_recommendation(movie_id, recommendation_amount):
     """
 
     return tag_data.recommender.get_recommendations(movie_id, recommendation_amount)
- 
-#for tests
-if __name__ == "__main__":
-
-    # 1) Load the movies metadata so we can map IDs → titles
-    this_dir   = os.path.dirname(__file__)
-    csv_path   = os.path.abspath(os.path.join(this_dir, "..", "datasets", "ml-20m", "movies.csv"))
-    movies_df  = pd.read_csv(csv_path)
-    id_to_title = dict(zip(movies_df["movieId"], movies_df["title"]))
-
-    # 2) Pick a test movie by ID (or you could reverse‐lookup by title here)
-    movie_id             = 5
-    recommendation_amount = 5
-
-    # 3) Get your recommendations (list of IDs)
-    rec_ids = get_tag_based_recommendation(movie_id, recommendation_amount)
-
-    # 4) Map IDs to titles
-    rec_titles = [id_to_title.get(mid, f"<Unknown ID {mid}>") for mid in rec_ids]
-
-    # 5) Print human‐friendly output
-    test_title = id_to_title.get(movie_id, str(movie_id))
-    print(f"\nTop {recommendation_amount} recommendations for “{test_title}”:")
-    for i, title in enumerate(rec_titles, start=1):
-        print(f"{i}. {title}")
-
-
-
-
-
-
-
-    
