@@ -4,6 +4,7 @@ from algorithms.algorithm_plot_topic import LdaData
 from tqdm import tqdm
 import numpy as np
 import os
+from itertools import islice, chain
 
 class Command(BaseCommand):
     help = "Precompute and store plot-based movie recommendations using LDA"
@@ -20,6 +21,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Clear existing plot recommendations before computing new ones'
         )
+
+    def chunked(self, iterable, size):
+        """Split iterable into chunks of specified size to avoid SQL variable limits."""
+        it = iter(iterable)
+        return iter(lambda: list(islice(it, size)), [])
 
     def handle(self, *args, **options):
         top_k = options['top_k']
@@ -44,13 +50,22 @@ class Command(BaseCommand):
         
         # Get all movies that have LDA data
         movie_ids_with_lda = set(lda_data.movie_ids)
-        movies = Movie.objects.filter(movie_id__in=movie_ids_with_lda)
         
-        if not movies.exists():
+        def chunked(iterable, size):
+            it = iter(iterable)
+            return iter(lambda: list(islice(it, size)), [])
+
+        movie_ids_chunks = chunked(movie_ids_with_lda, 900)
+
+        movies = list(chain.from_iterable(
+            Movie.objects.filter(movie_id__in=chunk) for chunk in movie_ids_chunks
+        ))
+
+        if not movies:
             self.stdout.write(self.style.WARNING("No movies found with LDA data"))
             return
-        
-        self.stdout.write(f"Computing recommendations for {movies.count()} movies...")
+
+        self.stdout.write(f"Computing recommendations for {len(movies)} movies...")
         
         updated = 0
         skipped = 0
